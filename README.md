@@ -19,3 +19,15 @@ EPA provides several ways of [accessing GHGRP data](https://www.epa.gov/ghgrepor
 * ***[Envirofacts](https://www.epa.gov/enviro/greenhouse-gas-customized-search):*** Provides all publicly available data collected by the GHGRP in a searchable, downloadable format for facilities. This includes GHG data and much of the underlying data facilities use to determine GHG values and other reported data elements in 32 industry types. Although users can click through and select data, it's recommended that the API is used instead.
     * [Data Model](https://www.epa.gov/enviro/greenhouse-gas-model)
     * [API](https://www.epa.gov/enviro/envirofacts-data-service-api)
+
+## How to use
+
+Edit your desired output directory and years to download in `envirofacts_api/Get_GHGRP_data.py`, then run:
+```shell
+python envirofacts_api/Get_GHGRP_data.py
+```
+The script will download each table from each subpart, one year at a time. You can remove or re-order tables in `tables.txt` if desired. Currently, there are bugs in reading the subpart W tables (url does not exist)
+
+The list of tables was parsed from "CUSTOMIZED SEARCH DATA ELEMENT SEARCH TOOL RESULTS" at https://enviro.epa.gov/enviro/ghg_nav_tool_v2.get_list?clmn_like=emissions&view_type=CUSTOM
+
+
