@@ -2,6 +2,7 @@
 """
 Original code by @calmc, colin.mcmillan@nrel.gov (2020-08-12)
 Refactored by @pennelise, epenn@g.harvard.edu (2023-05-08)
+List of tables by @ekcomputer, ethan_kyzivat[at]fas.harvard.edu (2025-01-29)
 """
 #
 import os
@@ -93,9 +94,7 @@ class GHGRP_API:
             raise ValueError("Count file format not recognized.")
         return count
 
-    def get_reporting_year_query(
-        self, table: str, reporting_year: Optional[int] = None
-    ) -> str:
+    def get_reporting_year_query(self, table: str, reporting_year: Optional[int] = None) -> str:
         """Construct a custom_query to select a specific reporting year."""
         if reporting_year is None:
             return ""
@@ -139,9 +138,7 @@ class GHGRP_API:
         reporting_year_query = self.get_reporting_year_query(
             table=table, reporting_year=reporting_year
         )
-        max_row = rows or self.get_row_count(
-            table=table, custom_query=reporting_year_query
-        )
+        max_row = rows or self.get_row_count(table=table, custom_query=reporting_year_query)
 
         # slice into 10,000 row chunks because the EPA API has a limit of 10,000 rows
         row_range_without_max = np.arange(start=0, stop=max_row, step=10000, dtype=int)
@@ -167,16 +164,13 @@ class GHGRP_API:
 
 if __name__ == "__main__":
     ## User parameters:
-    base_dir = "/Volumes/metis/Salata-industry-emissions/EPA/GHGRP/api"
+    base_dir = "/your/output/directory/goes/here"
     years = [2023, 2022, 2021, 2020]
 
     ## Script parameters:
     api = GHGRP_API()
 
-    # tables_list_pth = os.path.join(os.path.dirname(__file__), "..", "tables.txt")
-    tables_list_pth = (
-        "/Volumes/metis/Salata-industry-emissions/EPA/GHGRP/metadata/table_html/tables_main.txt"
-    )
+    tables_list_pth = os.path.join(os.path.dirname(__file__), "..", "tables.txt")
     with open(tables_list_pth, "r") as file:
         tables = [line.strip() for line in file if line.strip()]
     print(tables)
