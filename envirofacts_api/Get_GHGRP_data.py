@@ -166,23 +166,20 @@ class GHGRP_API:
 
 
 if __name__ == "__main__":
-    api = GHGRP_API()
+    ## User parameters:
     base_dir = "/Volumes/metis/Salata-industry-emissions/EPA/GHGRP/api"
+    years = [2023, 2022, 2021, 2020]
+
+    ## Script parameters:
+    api = GHGRP_API()
+
+    # tables_list_pth = os.path.join(os.path.dirname(__file__), "..", "tables.txt")
     tables_list_pth = (
         "/Volumes/metis/Salata-industry-emissions/EPA/GHGRP/metadata/table_html/tables_main.txt"
     )
     with open(tables_list_pth, "r") as file:
         tables = [line.strip() for line in file if line.strip()]
     print(tables)
-    years = [2023, 2022, 2021, 2020]
-    # tables = [
-    #     "FF_COAL",
-    #     "C_FUEL_LEVEL_INFORMATION",
-    #     "D_FUEL_LEVEL_INFORMATION",
-    #     # "c_configuration_level_info",
-    #     "V_GHG_EMITTER_FACILITIES",
-    #     "pub_dim_facility",
-    # ]
 
     # table = "pub_dim_facility"
     for table in tables:
@@ -190,7 +187,7 @@ if __name__ == "__main__":
             pth_out = os.path.join(base_dir, f"{table}_{year}.csv")
             if not os.path.exists(pth_out):
                 try:
-                    df_returned = api.get_data(table=table, reporting_year=2023)
+                    df_returned = api.get_data(table=table, reporting_year=year)
                     df_returned.to_csv(pth_out)
                     print(f"Wrote file: {pth_out}")
                     time.sleep(5)
