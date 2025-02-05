@@ -147,17 +147,20 @@ class GHGRP_API:
         )  # append last row because np.arange does not include stop
 
         ghgrp_data = []
-        for n in range(len(row_range) - 1):
-            table_slice = self.get_table_slice(
-                table=table,
-                start_row=row_range[n],
-                end_row=row_range[n + 1],
-                custom_query=reporting_year_query,
-            )
-            ghgrp_data.append(table_slice)
-        ghgrp_data = pd.concat(ghgrp_data)
+        if len(row_range) > 1:
+            for n in range(len(row_range) - 1):
+                table_slice = self.get_table_slice(
+                    table=table,
+                    start_row=row_range[n],
+                    end_row=row_range[n + 1],
+                    custom_query=reporting_year_query,
+                )
+                ghgrp_data.append(table_slice)
+            ghgrp_data = pd.concat(ghgrp_data)
 
-        ghgrp_data.drop_duplicates(inplace=True)
+            ghgrp_data.drop_duplicates(inplace=True)
+        else:
+            return None
 
         return ghgrp_data
 
